@@ -1,11 +1,11 @@
 public abstract class Vehicle{
     // use license plate as unique identifier of vehicles
-    private String licensePlate;
-    private VehicleSize vehicleSize;
+    private final String licensePlate;
+    private final VehicleSize vehicleSize;
 
     protected Vehicle(String licensePlate, VehicleSize vehicleSize){
-        licensePlate = this.licensePlate;
-        vehicleSize = this.vehicleSize;
+        this.licensePlate = licensePlate;
+        this.vehicleSize = vehicleSize;
     }
 
     public String getLicensePlate(){
