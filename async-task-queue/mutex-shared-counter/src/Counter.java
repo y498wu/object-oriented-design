@@ -1,18 +1,16 @@
 public class Counter {
     static int count = 0;
 
-    public static void main(String[] args) throws InterruptedException {
-        Thread t1 = new Thread(() -> {
-            for (int i = 0; i < 100_000; i++) {
-                count++;  // not safe!
-            }
-        });
+    private static synchronized void addTenThousand(){
+        for (int i = 0; i < 100000; i++){
+            count++;
+        }
+    }
 
-        Thread t2 = new Thread(() -> {
-            for (int i = 0; i < 100_000; i++) {
-                count++;  // not safe!
-            }
-        });
+    public static void main(String[] args) throws InterruptedException {
+        Thread t1 = new Thread(Counter::addTenThousand);
+
+        Thread t2 = new Thread(Counter::addTenThousand);
 
         t1.start();
         t2.start();
