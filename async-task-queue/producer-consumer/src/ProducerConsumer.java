@@ -9,8 +9,6 @@ public class ProducerConsumer {
         Thread producer = new Thread(() -> {
             for (int i = 0; i < 20; i++) {
                 synchronized (lock) {
-                    // TODO: while queue is full, wait
-                    //       (use lock.wait() — it releases the lock and sleeps)
                     while(queue.size() == MAX_SIZE){
                         try {
                             lock.wait();
@@ -22,7 +20,6 @@ public class ProducerConsumer {
                     queue.add(i);
                     System.out.println("Produced: " + i + " | queue size: " + queue.size());
 
-                    // TODO: notify the consumer that something is available
                     lock.notifyAll();
                 }
             }
@@ -31,7 +28,6 @@ public class ProducerConsumer {
         Thread consumer = new Thread(() -> {
             for (int i = 0; i < 20; i++) {
                 synchronized (lock) {
-                    // TODO: while queue is empty, wait
                     while(queue.isEmpty()){
                         try{
                             lock.wait();
@@ -43,7 +39,6 @@ public class ProducerConsumer {
                     int val = queue.removeFirst();
                     System.out.println("Consumed: " + val + " | queue size: " + queue.size());
 
-                    // TODO: notify the producer that there's room
                     lock.notifyAll();
                 }
             }
